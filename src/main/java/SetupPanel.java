@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.*;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -101,6 +102,30 @@ public class SetupPanel extends JPanel {
 	}
 
 	void nextStep() {
-		out.println("");
+		try {
+			out.println("Ensuring the www directory exists");
+			if (!Config.wwwFolder.exists()) {
+				out.println("Creating www directory");
+				Config.wwwFolder.mkdirs();
+				Config.wwwFolder = Config.wwwFolder.getCanonicalFile();
+				out.println("Adding demo index.php");
+				InputStream indexStream = getClass().getResourceAsStream("index.php");
+				Files.copy(indexStream, new File(Config.wwwFolder, "index.php").toPath());
+			}
+			else {
+				out.println("Www directory found");
+			}
+			out.println("Setup complete, press the Next button to run the server");
+			JButton nextButton = new JButton("Next");
+			nextButton.addActionListener((ActionEvent e) -> {
+				Main.router.show(Main.routerPanel, Main.Pages.RUN.toString());
+				Main.runPanel.init();
+			});
+			add(nextButton);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 }

@@ -30,12 +30,9 @@ public class ConfigPanel extends JPanel {
 		JButton nextButton = new JButton("Next");
 		nextButton.addActionListener((ActionEvent e) -> {
 			File installDir = new File(installDirInput.getText());
-			File wwwFolder = new File(wwwFolderInput.getText());
-			wwwFolder.mkdirs();
-
 			try {
-				Config.installDir = installDir;
-				Config.wwwFolder = wwwFolder.getCanonicalFile();
+				installDir.mkdirs();
+				Config.installDir = installDir.getCanonicalFile();
 			}
 			catch(IOException ex) {
 				JOptionPane.showMessageDialog(null, "You don't have permission to write to install dir or www folder");

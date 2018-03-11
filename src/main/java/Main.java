@@ -6,6 +6,7 @@ public class Main {
 	public static JPanel routerPanel;
 	public static ConfigPanel configPanel;
 	public static SetupPanel setupPanel;
+	public static RunPanel runPanel;
 	public enum Pages {
 		CONFIG,
 		SETUP,
@@ -17,10 +18,11 @@ public class Main {
 		router = new CardLayout();
 		routerPanel = new JPanel(router);
 
-		routerPanel.add(configPanel = new ConfigPanel(), Pages.CONFIG.toString());
+		routerPanel.add(new JScrollPane(configPanel = new ConfigPanel()), Pages.CONFIG.toString());
 		routerPanel.add(setupPanel = new SetupPanel(), Pages.SETUP.toString());
+		routerPanel.add(runPanel = new RunPanel(), Pages.RUN.toString());
 
-		frame.add(new JScrollPane(routerPanel));
+		frame.add(routerPanel);
 		frame.pack();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

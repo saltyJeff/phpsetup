@@ -14,7 +14,7 @@ public class Main {
 	}
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
-
+		frame.setTitle("PHP Setup Wizard");
 		router = new CardLayout();
 		routerPanel = new JPanel(router);
 

@@ -106,6 +106,8 @@ public class SetupPanel extends JPanel {
 				out.println("Adding demo index.php");
 				InputStream indexStream = getClass().getResourceAsStream("index.php");
 				Files.copy(indexStream, new File(Config.get().wwwFolder(), "index.php").toPath());
+				InputStream iniStream = getClass().getResourceAsStream("php.ini");
+				Files.copy(iniStream, new File(Config.get().wwwFolder(), "php.ini").toPath());
 			}
 			else {
 				out.println("Www directory found");

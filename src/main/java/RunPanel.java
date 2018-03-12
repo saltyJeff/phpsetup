@@ -21,12 +21,10 @@ public class RunPanel extends JPanel {
 			String phpExe = new File(Config.get().installDir(), "php.exe").getCanonicalPath();
 			String wwwFolder = Config.get().wwwFolder().getCanonicalPath();
 			String addr = "localhost:"+Config.get().serverPort();
-			String command = String.format("%s -S %s -t %s", phpExe, addr, wwwFolder);
 			out.println("Executing the following command:");
 			ProcessBuilder processBuilder = new ProcessBuilder()
-					.command(phpExe, "-S", addr, "-t", wwwFolder);
-			out.println(command);
-
+					.command(phpExe, "-S", addr, "-t", wwwFolder, "-c", new File(wwwFolder, "php.ini").getPath());
+			out.println(String.join(" ", processBuilder.command()));
 			proc = processBuilder.start();
 			new StreamGobbler(proc.getErrorStream(), out).start();
 			new StreamGobbler(proc.getInputStream(), out).start();

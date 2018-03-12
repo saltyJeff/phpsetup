@@ -18,9 +18,9 @@ public class RunPanel extends JPanel {
 	}
 	public void init() {
 		try {
-			String phpExe = new File(Config.installDir, "php.exe").getCanonicalPath();
-			String wwwFolder = Config.wwwFolder.getCanonicalPath();
-			String addr = "localhost:"+Config.serverPort;
+			String phpExe = new File(Config.get().installDir(), "php.exe").getCanonicalPath();
+			String wwwFolder = Config.get().wwwFolder().getCanonicalPath();
+			String addr = "localhost:"+Config.get().serverPort();
 			String command = String.format("%s -S %s -t %s", phpExe, addr, wwwFolder);
 			out.println("Executing the following command:");
 			ProcessBuilder processBuilder = new ProcessBuilder()
@@ -39,11 +39,12 @@ public class RunPanel extends JPanel {
 			add(exitButton);
 
 			//because double clicking is too hard
-			if(Desktop.isDesktopSupported()) {
+			if(Config.get().autoOpen() && Desktop.isDesktopSupported()) {
 				Desktop.getDesktop().browse(new URI("http://"+addr));
-				Desktop.getDesktop().open(Config.wwwFolder);
+				Desktop.getDesktop().open(Config.get().wwwFolder());
 			}
 
+			Config.get().save();
 		}
 		catch(Exception e) {
 			e.printStackTrace();

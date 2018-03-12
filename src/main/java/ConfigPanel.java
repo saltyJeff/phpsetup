@@ -9,6 +9,7 @@ import java.net.URL;
 public class ConfigPanel extends JPanel {
 	private JTextField installDirInput, wwwFolderInput, downloadUrlInput;
 	private JSpinner serverPortInput;
+	private JCheckBox autoOpenInput;
 	public ConfigPanel() {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -20,27 +21,31 @@ public class ConfigPanel extends JPanel {
 		add(serverPortInput = new JSpinner());
 		add(new JLabel("Download URL"));
 		add(downloadUrlInput = new JTextField());
+		add(new JLabel("Automatically open explorer/browser when done"));
+		add(autoOpenInput = new JCheckBox());
+		autoOpenInput.setSelected(Config.get().autoOpen());
 		setBorder(new EmptyBorder(10, 20, 10, 20));
 
-		installDirInput.setText(Config.installDir.getAbsolutePath());
-		wwwFolderInput.setText(Config.wwwFolder.getAbsolutePath());
-		downloadUrlInput.setText(Config.downloadUrl.toString());
-		serverPortInput.setModel(new SpinnerNumberModel(Config.serverPort, 8000, 27999, 1));
+		installDirInput.setText(Config.get().installDir().getAbsolutePath());
+		wwwFolderInput.setText(Config.get().installDir().getAbsolutePath());
+		downloadUrlInput.setText(Config.get().downloadUrl().toString());
+		serverPortInput.setModel(new SpinnerNumberModel(Config.get().serverPort(), 8000, 27999, 1));
 
 		JButton nextButton = new JButton("Next");
 		nextButton.addActionListener((ActionEvent e) -> {
+			Config.get().autoOpen(autoOpenInput.isSelected());
 			File installDir = new File(installDirInput.getText());
 			try {
 				installDir.mkdirs();
-				Config.installDir = installDir.getCanonicalFile();
+				Config.get().installDir(installDir.getCanonicalFile());
 			}
 			catch(IOException ex) {
 				JOptionPane.showMessageDialog(null, "You don't have permission to write to install dir or www folder");
 				return;
 			}
-			Config.serverPort = (int) serverPortInput.getValue();
+			Config.get().serverPort((int) serverPortInput.getValue());
 			try {
-				Config.downloadUrl  = new URL(downloadUrlInput.getText());
+				Config.get().downloadUrl(new URL(downloadUrlInput.getText()));
 			}
 			catch(MalformedURLException ex) {
 				JOptionPane.showMessageDialog(null, "The download URL is malformed");

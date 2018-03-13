@@ -27,7 +27,7 @@ public class ConfigPanel extends JPanel {
 		setBorder(new EmptyBorder(10, 20, 10, 20));
 
 		installDirInput.setText(Config.get().installDir().getAbsolutePath());
-		wwwFolderInput.setText(Config.get().installDir().getAbsolutePath());
+		wwwFolderInput.setText(Config.get().wwwFolder().getAbsolutePath());
 		downloadUrlInput.setText(Config.get().downloadUrl().toString());
 		serverPortInput.setModel(new SpinnerNumberModel(Config.get().serverPort(), 8000, 27999, 1));
 
@@ -55,5 +55,6 @@ public class ConfigPanel extends JPanel {
 			Main.setupPanel.init();
 		});
 		add(nextButton);
+		Main.frame.pack();
 	}
 }

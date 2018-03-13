@@ -119,6 +119,7 @@ public class SetupPanel extends JPanel {
 				Main.router.show(Main.routerPanel, Main.Pages.RUN.toString());
 				Main.runPanel.init();
 			});
+			Main.frame.pack();
 		}
 		catch(IOException e) {
 			e.printStackTrace();

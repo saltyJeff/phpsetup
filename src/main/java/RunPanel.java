@@ -43,6 +43,7 @@ public class RunPanel extends JPanel {
 			}
 
 			Config.get().save();
+			Main.frame.pack();
 		}
 		catch(Exception e) {
 			e.printStackTrace();

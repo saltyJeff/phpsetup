@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Main {
+	public static JFrame frame;
 	public static CardLayout router;
 	public static JPanel routerPanel;
 	public static ConfigPanel configPanel;
@@ -13,7 +14,7 @@ public class Main {
 		RUN
 	}
 	public static void main(String[] args) {
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		frame.setTitle("PHP Setup Wizard");
 		router = new CardLayout();
 		routerPanel = new JPanel(router);
